@@ -1,12 +1,21 @@
 ---
 title: "Stat 198 Final Project"
-authors: "Lewis Eatherton, Devon Sinha, Ashna Ram, Samarth Menta"
-output: html_document
+authors: Lewis Eatherton, Devon Sinha, Ashna Ram, Samarth Menta
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(class)
+combined<-read_csv("combined.csv")
+reg_data <- read_csv("regressiondata.csv")
+reg_data <- reg_data %>% filter(Country == "USA" | Country == "New Zealand" | 
+                      Country == "South Korea")
 ```
+
 #### Introduction and Data:
 
 Our group wanted to explore how the COVID-19 pandemic affected the tendencies in movement for people around the world. We wondered if people became more stationary and spent more time in their homes or if they became more exploratory and inclined to spend time more outside. Our team chose to focus on mobility trends around the world during the progression of COVID-19 pandemic. Our central research question was the following: 
@@ -61,7 +70,24 @@ In order to address our research question about how the number of COVID-19 cases
  
 Our group then chose to create data visualizations for the U.S., South Korea, and New Zealand. This allowed us to analyze trends in the data and determine the next steps in conducting tests for our statistical analysis. We chose to use the combined mobility score variable for walking and driving to display overall mobility trends across the three countries. It should be noted that public transit may have been affected by differing national pandemic policies per country, so this mobility score was not included in the combined mobility score variable. The scatter/line plots are shown below.
  
->>SCATTERPLOT HERE<<
+```{r scatterplot}
+
+ggplot(data = reg_data, mapping = aes(x = Days_since_Janurary_22nd, y = Driving_mobility_score, color = Country)) +
+  geom_point(size=1) +
+  labs(title = "All Countries Expereience a Decrease in Driving 
+       Mobility Scores", 
+       x = "Days since January 22nd", 
+       y = 'Baseline Driving Mobility Score' )
+
+ggplot(data = reg_data, mapping = aes(x = Days_since_Janurary_22nd, y = Walking_mobility_score, color = Country)) +
+  geom_point(size=1) +
+  labs(title = "All Countries Expereience a Decrease in Walking 
+       Mobility Scores", 
+       x = "Days since January 22nd", 
+       y = 'Baseline Walking Mobility Score' )
+
+```
+
 
 These scatter-plots display the different combined (driving/walking) mobility scores on different days in 2020, for our three countries of interest (United States, South Korea, and New Zealand). In the scatter/line plots, most countries seem to have somewhat steady mobility scores for a certain period of time, then undergo a steep drop off, and then once again become somewhat steady. Our group hoped to explore potential reasons for the shapes of these curves. Could it be because of COVID? Is there a certain date range where the populations begin to see a large drop off in mobility scores? To further explore this interesting trend, we performed various statistical tests. 
  
@@ -71,11 +97,85 @@ The first statistical test we chose to perform was a two-sample t-test. We wante
  
 We compared two means in this two-sample t-test, the first being the mean mobility score pre-March 1 and the second being the mean mobility score post-March 1. The tests’ summary statistics for the mean driving mobility score and mean walking mobility score in the U.S. are shown below.
  
->>TWO-SAMPLE T-TESTS FOR WALKING AND DRIVING HERE<<
+```{r t-tests}
+
+driving_us_pre<- combined %>% 
+  select(driving_us) %>% 
+  slice(1:40)
+ 
+
+driving_us_post <- combined %>% 
+  select(driving_us) %>% 
+  slice(41:84)
+ 
+
+t.test(driving_us_pre, driving_us_post, mu = 0, 
+       alternative = "greater", 
+       paired = FALSE, 
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+walking_us_pre <- combined %>% 
+  select(walking_us) %>% 
+  slice(1:40)
+ 
+
+walking_us_post <- combined %>% 
+  select(walking_us) %>% 
+  slice(41:84)
+ 
+
+t.test(walking_us_pre, walking_us_post, mu = 0, 
+       alternative = "greater", 
+       paired = FALSE, 
+       var.equal = FALSE,
+       conf.level = 0.95)
+
+
+```
+
  
 In order to account for outliers that may have influenced the mean mobility scores, such as holidays, we also decided to use a Wilcoxon rank-sum test to compare the median mobility scores pre- and post-March 1 for driving and walking in the US. We focused on the same question as interested listed for the two-sample t-test. The tests’ summary statistics for the median driving mobility score and mean walking mobility score in the U.S. are shown below.
  
->>WILCOXON RANK SUM TESTS FOR WALKING AND DRIVING HERE<<
+```{r Wilcoxon Rank Sum}
+walking_us_pre <- combined %>% 
+select(walking_us) %>% 
+slice(1:40) %>% 
+pull()
+
+walking_us_post <- combined %>% 
+select(walking_us) %>% 
+slice(41:84) %>% 
+pull()
+
+driving_us_pre <- combined %>% 
+select(driving_us) %>% 
+slice(1:40) %>% 
+pull()
+
+driving_us_post <- combined %>% 
+select(driving_us) %>% 
+slice(41:84) %>% 
+pull()
+
+wilcox.test(walking_us_pre, walking_us_post,
+alternative = "two.sided",
+paired = FALSE,
+conf.level = 0.95)
+
+wilcox.test(driving_us_pre, driving_us_post,
+alternative = "two.sided",
+paired = FALSE,
+conf.level = 0.95)
+
+median(walking_us_pre, na.rm = FALSE)
+median(walking_us_post, na.rm = FALSE)
+
+median(driving_us_pre, na.rm = FALSE)
+median(driving_us_post, na.rm = FALSE)
+```
+
 
 Based on our results from comparing the means and medians pre- and post-March 1 in the U.S., we had reason to believe that mobility trends did change during the COVID-19 pandemic. This was also in line with what we saw in the scatter/line plots, where we saw a general decrease in mobility scores (although there were some initial increases). These t-tests allowed us to make further conclusions about this drop off in mobility scores, as we created two populations of mobility scores based on whether the data occurred before the national state of emergency in the US or afterwards. Still, the t-tests should be taken with a grain of salt as there may have been some issues with independence of samples. Because of this, our group decided to explore a linear regression model using COVID cases as a predictor for mobility score to see if we can learn more about the relationship between mobility trends and COVID. More specifically, our group wanted to see how the combined mobility score variables changed as the number of cases progressed in different countries. We chose to focus on our three selected countries: the U.S., South Korea, and New Zealand and focused on the following question of interest: 
  
@@ -83,7 +183,70 @@ Based on our results from comparing the means and medians pre- and post-March 1 
  
 The regression visualization is shown below.
  
->>REGRESSION SCREENSHOT HERE<<
+```{r linear regression models US}
+
+library(tidyverse)
+library(broom)
+reg_data_modified <- reg_data %>%
+  filter(Number_of_cases != 0) %>%  filter(Country == "USA" | Country == "New Zealand" | Country == "South Korea")
+
+ggplot(data = reg_data_modified, mapping = aes(x = log(Number_of_cases), y = Averaged_mobility_score, color = Country)) +
+geom_point()+
+geom_smooth(method="lm", se = FALSE)+
+labs(title = "There is a negative correlation between the log number 
+of COVID cases and the averaged mobility score in all 3 countries",
+x = "log(Number of cases)", y = "Averaged mobility score")
+
+
+
+reg_data_usa <- reg_data_modified %>%
+  filter(Country == "USA")
+mod1 <- lm(Averaged_mobility_score ~ log(Number_of_cases), data = reg_data_usa)
+tidy(mod1)
+
+ggplot(data = mod1, mapping = aes(x = .resid)) + 
+  geom_histogram(binwidth = 4) + 
+  labs(x = "Residuals", y = "Count",
+       title = "US Residuals are slightly right-skewed")
+
+ggplot(data = mod1, mapping = aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  labs(x = "Fitted values", y = "Residuals",
+       title = "US Residual plot is clustered and has patterns")
+
+
+reg_data_NZ <- reg_data_modified %>%
+  filter(Country == "New Zealand")
+mod3 <- lm(Averaged_mobility_score ~ log(Number_of_cases), data = reg_data_NZ)
+tidy(mod3)
+
+ggplot(data = mod3, mapping = aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  labs(x = "Fitted values", y = "Residuals",
+       title = "New Zealand Residual is clustered and has patterns")
+
+ggplot(data = mod3, mapping = aes(x = .resid)) + 
+  geom_histogram(binwidth = 4) + 
+  labs(x = "Residuals", y = "Count",
+       title = "New Zealand Residuals are slightly left-skewed")
+
+reg_data_SK <- reg_data_modified %>%
+  filter(Country == "South Korea")
+mod4 <- lm(Averaged_mobility_score ~ log(Number_of_cases), data = reg_data_SK)
+tidy(mod4)
+
+ggplot(data = mod4, mapping = aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  labs(x = "Fitted values", y = "Residuals",
+       title = "South Korea Residual is clustered and has patterns")
+
+ggplot(data = mod4, mapping = aes(x = .resid)) + 
+  geom_histogram(binwidth = 4) + 
+  labs(x = "Residuals", y = "Count",
+       title = "South Korea Residuals are roughly symmetric, but not normal")
+
+```
+
 
 #### Results
 
