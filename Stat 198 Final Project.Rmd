@@ -1,0 +1,14 @@
+---
+title: "Stat 198 Final Project"
+authors: "Lewis Eatherton, Devon Sinha, Ashna Ram, Samarth Menta"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+#### Introduction and Data:
+
+Our group wanted to explore how the COVID-19 pandemic affected the tendencies in movement for people around the world. We wondered if people became more stationary and spent more time in their homes or if they became more exploratory and inclined to spend time more outside. Our team chose to focus on mobility trends around the world during the progression of COVID-19 pandemic. Our central research question was the following: 
+ 
+**How did the progression of the COVID-19 pandemic affect mobility trends in different countries?** 
