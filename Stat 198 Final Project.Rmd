@@ -29,3 +29,58 @@ The second dataset used in this analysis was the **applemobilitytrends-2020-04-1
 **transportation_type** (value is either driving, walking, or transit)
 **2020-01-13** (example of a date variable, columns exist for each date up until 2020-04-14, and value is mobility rate score relative to a baseline score of 100 on January 13th, 2020)
  
+#### Methodology:
+
+In order to address our research question about how the number of COVID-19 cases affected mobility trends in different countries, we decided to focus on three different countries: The United States, South Korea, and New Zealand. These three countries were chosen based on relative news trends in the past few months and their differing policies during the pandemic and quarantining. We then chose to manipulate our raw datasets into two new datasets to use for our data visualizations and statistical tests. The original datasets were manipulated in Google sheets to produce the following:
+ 
+**Manipulated Dataset 1: combined.csv**: A new dataset that includes the mobility score for each transportation type per day along with the number of covid cases per day for each country of interest
+ 
+**Variables:**
+**day** (value is the date in the format of year-month-day)
+**driving_us** (value is driving mobility score for U.S.)
+**walking_us** (value is walking mobility score for U.S.)
+**transit_us** (value is transit mobility score for U.S.)
+**cases_us** (value is the number of cases for U.S.)
+**driving_korea** (value is driving mobility score for South Korea)
+**walking_korea** (value is walking mobility score for South Korea)
+**cases_korea** (value is the number of cases for South Korea.)
+**driving_newzealand** (value is driving mobility score for New Zealand)
+**walking_newzealand** (value is walking mobility score for New Zealand)
+**transit_newzealand** (value is transit mobility score for New Zealand)
+**cases_newzealand** (value is number of cases for New Zealand)
+ 
+**Manipulated Dataset 2: regressiondata.csv**: A new dataset that includes the mobility score for only driving and walking per day, the number of covid cases per day for each country of interest, and a combined mobility score variable for driving and walking per day.
+ 
+**Variables:**
+**Driving_mobility_score** (value is the mobility score for driving)
+**Walking_mobility_score** (value is the mobility score for walking)
+**Averaged_mobility_score** (value is the average of the driving and walking mobility score to produce a combined mobility score variable)
+**Number_of_cases** (value is number of COVID-19 cases)
+**Country** (value is name of country)
+**Days_since_January_22nd** (value is number of days since January 22nd)
+ 
+Our group then chose to create data visualizations for the U.S., South Korea, and New Zealand. This allowed us to analyze trends in the data and determine the next steps in conducting tests for our statistical analysis. We chose to use the combined mobility score variable for walking and driving to display overall mobility trends across the three countries. It should be noted that public transit may have been affected by differing national pandemic policies per country, so this mobility score was not included in the combined mobility score variable. The scatter/line plots are shown below.
+ 
+>>SCATTERPLOT HERE<<
+
+These scatter-plots display the different combined (driving/walking) mobility scores on different days in 2020, for our three countries of interest (United States, South Korea, and New Zealand). In the scatter/line plots, most countries seem to have somewhat steady mobility scores for a certain period of time, then undergo a steep drop off, and then once again become somewhat steady. Our group hoped to explore potential reasons for the shapes of these curves. Could it be because of COVID? Is there a certain date range where the populations begin to see a large drop off in mobility scores? To further explore this interesting trend, we performed various statistical tests. 
+ 
+The first statistical test we chose to perform was a two-sample t-test. We wanted to determine whether there was evidence that suggested that the declaration of a state of emergency due to COVID-19 would affect mobility. We chose to focus on the U.S. when conducting this test, noting that March 1st, 2020 was the date where the U.S. declared a national emergency. Our question of interest was the following: 
+ 
+**Did mobility trends change as COVID-19 cases progressed in the U.S.?**
+ 
+We compared two means in this two-sample t-test, the first being the mean mobility score pre-March 1 and the second being the mean mobility score post-March 1. The tests’ summary statistics for the mean driving mobility score and mean walking mobility score in the U.S. are shown below.
+ 
+>>TWO-SAMPLE T-TESTS FOR WALKING AND DRIVING HERE<<
+ 
+In order to account for outliers that may have influenced the mean mobility scores, such as holidays, we also decided to use a Wilcoxon rank-sum test to compare the median mobility scores pre- and post-March 1 for driving and walking in the US. We focused on the same question as interested listed for the two-sample t-test. The tests’ summary statistics for the median driving mobility score and mean walking mobility score in the U.S. are shown below.
+ 
+>>WILCOXON RANK SUM TESTS FOR WALKING AND DRIVING HERE<<
+
+Based on our results from comparing the means and medians pre- and post-March 1 in the U.S., we had reason to believe that mobility trends did change during the COVID-19 pandemic. This was also in line with what we saw in the scatter/line plots, where we saw a general decrease in mobility scores (although there were some initial increases). These t-tests allowed us to make further conclusions about this drop off in mobility scores, as we created two populations of mobility scores based on whether the data occurred before the national state of emergency in the US or afterwards. Still, the t-tests should be taken with a grain of salt as there may have been some issues with independence of samples. Because of this, our group decided to explore a linear regression model using COVID cases as a predictor for mobility score to see if we can learn more about the relationship between mobility trends and COVID. More specifically, our group wanted to see how the combined mobility score variables changed as the number of cases progressed in different countries. We chose to focus on our three selected countries: the U.S., South Korea, and New Zealand and focused on the following question of interest: 
+ 
+**How did the number of COVID-19 cases affect mobility trends in the U.S., South Korea, and New Zealand?**
+ 
+The regression visualization is shown below.
+ 
+>>REGRESSION SCREENSHOT HERE<<
