@@ -340,4 +340,8 @@ If we were to do this project differently, one approach we would take is collect
 
 ## Works Cited:
 
+Garrett, K. (2020, April 16). COVID-19 Mobility Trends in Apple Maps - dataset by kgarrett. Retrieved from https://data.world/kgarrett/covid-19-mobility-trends
 
+Home. (n.d.). Retrieved from https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases
+
+Proclamation on Declaring a National Emergency Concerning the Novel Coronavirus Disease (COVID-19) Outbreak. (2020, March 13). Retrieved from https://www.whitehouse.gov/presidential-actions/proclamation-declaring-national-emergency-concerning-novel-coronavirus-disease-covid-19-outbreak/
