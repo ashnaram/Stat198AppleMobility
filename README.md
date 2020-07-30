@@ -1,16 +1,16 @@
-#### Stat 198 Final Project Codebook
+## Stat 198 Final Project Codebook
 
 Below is a codebook of all variables used in the statistical analysis for each dataset in the GitHub repository.
 
 
-**applemobilitytrends-2020-04-14-1.csv**
+### applemobilitytrends-2020-04-14-1.csv
 
 **Country/region** (value is name of country/region)
 
 **1/22/20** (example of a date variable, columns exist for each date up until 7/24/20, and value is number of cases on specified date)
 
  
-**time_series_covid19_confirmed_global.csv**
+### time_series_covid19_confirmed_global.csv
 
 **region** (value is name of country/region or city)
 
@@ -19,7 +19,7 @@ Below is a codebook of all variables used in the statistical analysis for each d
 **2020-01-13** (example of a date variable, columns exist for each date up until 2020-04-14, and value is mobility rate score relative to a baseline score of 100 on January 13th, 2020)
 
  
-**combined.csv**
+### combined.csv
 
 **day** (value is the date in the format of year-month-day)
 
@@ -42,7 +42,7 @@ Below is a codebook of all variables used in the statistical analysis for each d
 **cases_newzealand** (value is number of cases for New Zealand)
 
  
-**regressiondata.csv**
+### regressiondata.csv
 
 **Driving_mobility_score** (value is the mobility score for driving)
 
