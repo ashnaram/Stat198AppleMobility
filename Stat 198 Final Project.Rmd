@@ -20,7 +20,7 @@ reg_data <- reg_data %>% filter(Country == "USA" | Country == "New Zealand" |
 
 Our group wanted to explore how the COVID-19 pandemic affected the tendencies in movement for people around the world. We wondered if people became more stationary and spent more time in their homes or if they became more exploratory and inclined to spend time more outside. Our team chose to focus on mobility trends around the world during the progression of COVID-19 pandemic. Our central research question was the following: 
  
-**How did the progression of the COVID-19 pandemic affect mobility trends in different countries?** 
+**How did the progression of the COVID-19 pandemic affect mobility trends in different countries?**
 
 
 We used two datasets to conduct a statistical analysis to answer this overarching question, the first being the **time_series_covid19_confirmed_global.csv** file which contains COVID-19 epidemiological data from January 22, 2020 to July 24, 2020. This data was compiled by the Johns Hopkins University Center for Systems Science and Engineering from various sources including the World Health Organization, DXY.cn, BNO News, National Health Commission of the People’s Republic of China, China CDC, Hong Kong Department of Health, Macau Government, Taiwan CDC, US CDC, Government of Canada, Australia Government Department of Health, European Centre for Disease Prevention and Control, Ministry of Health Singapore, and others. Each of these organizations collected the data in accordance with their country’s data collection policies during the pandemic. The variables in this dataset are listed below with their corresponding description:
@@ -40,7 +40,7 @@ The second dataset used in this analysis was the **applemobilitytrends-2020-04-1
  
 ## Methodology:
 
-In order to address our research question about how the number of COVID-19 cases affected mobility trends in different countries, we decided to focus on three different countries: The United States, South Korea, and New Zealand. These three countries were chosen based on relative news trends in the past few months and their differing policies during the pandemic and quarantining. We then chose to manipulate our raw datasets into two new datasets to use for our data visualizations and statistical tests. The original datasets were manipulated in Google sheets to produce the following:
+In order to address our research question about how the progression of COVID-19  affected mobility trends in different countries, we decided to focus on three different countries: The United States, South Korea, and New Zealand. These three countries were chosen based on relative news trends in the past few months and their differing policies during the pandemic and quarantining. We then chose to manipulate our raw datasets into two new datasets to use for our data visualizations and statistical tests. The original datasets were manipulated in Google sheets to produce the following:
  
 **Manipulated Dataset 1: combined.csv**: A new dataset that includes the mobility score for each transportation type per day along with the number of covid cases per day for each country of interest
  
