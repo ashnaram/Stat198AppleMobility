@@ -16,7 +16,7 @@ reg_data <- reg_data %>% filter(Country == "USA" | Country == "New Zealand" |
                       Country == "South Korea")
 ```
 
-#### Introduction and Data:
+## Introduction and Data:
 
 Our group wanted to explore how the COVID-19 pandemic affected the tendencies in movement for people around the world. We wondered if people became more stationary and spent more time in their homes or if they became more exploratory and inclined to spend time more outside. Our team chose to focus on mobility trends around the world during the progression of COVID-19 pandemic. Our central research question was the following: 
  
@@ -38,7 +38,7 @@ The second dataset used in this analysis was the **applemobilitytrends-2020-04-1
 **transportation_type** (value is either driving, walking, or transit)
 **2020-01-13** (example of a date variable, columns exist for each date up until 2020-04-14, and value is mobility rate score relative to a baseline score of 100 on January 13th, 2020)
  
-#### Methodology:
+## Methodology:
 
 In order to address our research question about how the number of COVID-19 cases affected mobility trends in different countries, we decided to focus on three different countries: The United States, South Korea, and New Zealand. These three countries were chosen based on relative news trends in the past few months and their differing policies during the pandemic and quarantining. We then chose to manipulate our raw datasets into two new datasets to use for our data visualizations and statistical tests. The original datasets were manipulated in Google sheets to produce the following:
  
@@ -136,7 +136,7 @@ t.test(walking_us_pre, walking_us_post, mu = 0,
 ```
 
  
-In order to account for outliers that may have influenced the mean mobility scores, such as holidays, we also decided to use a Wilcoxon rank-sum test to compare the median mobility scores pre- and post-March 1 for driving and walking in the US. We focused on the same question as interested listed for the two-sample t-test. The tests’ summary statistics for the median driving mobility score and mean walking mobility score in the U.S. are shown below.
+In order to account for outliers that may have influenced the mean mobility scores, such as holidays, we also decided to use a Wilcoxon rank-sum test to compare the median mobility scores pre- and post-March 1 for driving and walking in the US. We focused on the same question as interested listed for the two-sample t-test. The tests’ summary statistics for the median driving mobility score and median walking mobility score in the U.S. are shown below.
  
 ```{r Wilcoxon Rank Sum}
 walking_us_pre <- combined %>% 
@@ -248,7 +248,7 @@ ggplot(data = mod4, mapping = aes(x = .resid)) +
 ```
 
 
-#### Results
+## Results:
 
 **Scatterplot results:** These scatter-plots display the different driving/walking mobility scores on different days in 2020, for our 5 countries of interest (United States,  South Korea, New Zealand, Italy, and Brazil). In both the walking and driving scatter-plots, most countries seem to have somewhat steady mobility scores for a certain period of time, then undergo a steep drop off, and then once again become somewhat steady. Because of these interesting trends, my group decided to explore potential reasons for the shapes of these curves. Could it be because of COVID? Is there a certain date range where the populations begin to see a large drop off in mobility scores? To further explore this interesting trend, my group performed various statistical tests. 
 
@@ -257,7 +257,7 @@ Wilcox rank sum test:  In order to see if median mobility scores had changed dur
 
 **Linear Regression:** For our linear regression, we realized when checking our assumptions that a simple mobility score predicted by number of cases model would not work, because the graph was not even close to linear. Thus, we performed a linear regression using the logarithm of the number of COVID-19 cases in a country as the predictor for that country’s mobility scores. However, this also meant some of our data could not be used, as log(0) is undefined. So, the data used for these regression starts when a country records its first case. In this test, we averaged a country’s walking and driving mobility scores for each day. Our model found that all three countries exhibited a negative correlation between the logarmith of the number cases and their respective mobility scores. New Zealand’s mobility score was the most responsive to their logarithm of their number of cases, as our model would expect New Zealand’s mobility score to decrease by 14.4 points for an increase of 1 in the logarmith of the number of cases. The USA’s mobility score was the least responsive to their logarithm of their number of cases, as our model would expect USA’s mobility score to decrease by 5.99 points for an increase of 1 in the logarmith of the number of cases. While we did find y-intercepts for all three regressions, they are not very meaningful for the purpose of our analysis, as they predict the mobility score when a country records its first case. Lastly, none of the assumptions required for our regression models were entirely satisfied, which would likely impact our model’s accuracy and/or validity.
 
-#### Discusssion
+## Discusssion:
 
 As we tried to answer our overall research question, we first looked to see if walking and driving mobility scores had changed at all during the COVID-19 pandemic. Using a two-sample t-test comparing mobility scores before and after March 1st in the US, we found that there is a statistically significant difference in the mean mobility score for both driving and walking in the US. In order to account for outliers that may have influenced the mean mobility score, such as holidays, we also decided to use a Wilcoxon rank-sum test to compare the median mobility scores in the US. We found that there is a statistically significant difference in the median mobility scores for both driving and walking. After coming to the conclusion that mobility trends had changed during the COVID-19 pandemic, we wanted to see how different countries mobility scores changed as the number of cases progressed. To do this, we ran three linear regressions on data from the US, New Zealand, and South Korea. Since we knew that both walking and driving mobility scores had decreased in the US, we decided to average them into a new mobility score we used for these regressions. Overall, we found that all three countries had a negative correlation between the log(number of cases) and their mobility scores, as the regression produced negative coefficients for all three countries. Out of the three countries, New Zealand’s regression model saw the largest expected decrease in average mobility score for an increase of 1 in the log(number of cases). The USA’s regression model had the smallest expected decrease in average mobility score for an increase of 1 in the log(number of cases).
 
